@@ -1,0 +1,67 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: Tang xudong
+ * @Date: 2021-03-15 20:10:24
+ * @LastEditors: Tang xudong
+ * @LastEditTime: 2021-03-15 20:10:24
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>代理模式</title>
+</head>
+
+<body>
+    <script>
+
+        class Images {
+            constructor(filename) {
+                this.filename = filename;
+            }
+            display() {
+                console.log('display.');
+            }
+        }
+        class RealImage extends Images {
+            constructor(filename) {
+                super(filename);
+                this.loadFromDisk(filename);
+            }
+            display() {
+                console.log('display ', this.filename);
+            }
+            loadFromDisk(filename) {
+                console.log("Loading " + filename);
+            }
+        }
+        class ProxyImage extends Images {
+            constructor(filename) {
+                super(filename);
+                this.realImage = null;
+            }
+
+            display() {
+                if (this.realImage === null) {
+                    this.realImage = new RealImage(this.filename);
+                }
+                this.realImage.display();
+            }
+        }
+        function demo() {
+            const images = new ProxyImage("test_10mb.jpg");
+            // 图像从磁盘加载
+            images.display();
+            console.log('----------');
+            // 图像不需要从磁盘加载
+            images.display();
+        }
+
+        demo();
+    </script>
+</body>
+
+</html>

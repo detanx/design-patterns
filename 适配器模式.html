@@ -1,0 +1,55 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: Tang xudong
+ * @Date: 2021-03-15 17:54:30
+ * @LastEditors: Tang xudong
+ * @LastEditTime: 2021-03-15 17:54:41
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>适配器模式</title>
+</head>
+
+<body>
+    <script>
+        class MediaPlayer {
+            play() {
+                console.log('play mp4');
+            }
+        }
+
+        // 适配器
+        class MediaAdapter {
+            play() {
+                new MediaPlayer().play();
+            }
+        }
+        class AudioPlayer {
+            play(type) {
+                if (type === 'mp3') {
+                    console.log('play mp3');
+                } else if (type === 'mp4') {
+                    new MediaAdapter().play();
+                } else {
+                    console.log("Invalid media. " + type + " format not supported");
+                }
+            }
+        }
+
+        function demo() {
+            const audio = new AudioPlayer();
+            audio.play('mp3');
+            audio.play('mp4');
+            audio.play('avi');
+        }
+
+        demo();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: Tang xudong
+ * @Date: 2020-11-18 16:48:22
+ * @LastEditors: Tang xudong
+ * @LastEditTime: 2021-02-27 17:11:07
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原型模式</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        // 创建原型对象
+        const prototype = {
+            name: '小小小十七',
+            getName() {
+                return this.name;
+            }
+        }
+
+        const xiao17 = Object.create(prototype, {
+            name: {
+                value: '小17'
+            },
+            parentName: {
+                value() {
+                    return prototype.name
+                }
+            }
+        });
+        console.log(xiao17.getName());
+        console.log(xiao17.parentName());
+        console.log(xiao17.__proto__ === prototype);
+    </script>
+</body>
+
+</html>

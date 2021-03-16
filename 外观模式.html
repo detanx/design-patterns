@@ -1,0 +1,68 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: Tang xudong
+ * @Date: 2021-03-15 19:05:53
+ * @LastEditors: Tang xudong
+ * @LastEditTime: 2021-03-15 19:05:54
+-->
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: Tang xudong
+ * @Date: 2021-03-15 18:39:28
+ * @LastEditors: Tang xudong
+ * @LastEditTime: 2021-03-15 19:05:40
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>外观模式</title>
+</head>
+
+<body>
+    <script>
+
+        class Shape {
+            draw() {
+                console.log('draw shape.');
+            }
+        }
+        class Circle extends Shape {
+            draw() {
+                console.log('draw circle.');
+            }
+        }
+
+        class Rectangle extends Shape {
+            draw() {
+                console.log('draw rectangle.');
+            }
+        }
+
+        class ShapeMaker {
+            constructor() {
+                this.circle = new Circle();
+                this.rectangle = new Rectangle();
+            }
+            drawCircle() {
+                this.circle.draw();
+            }
+            drawRectangle() {
+                this.rectangle.draw();
+            }
+        }
+        function demo() {
+            const shapeMaker = new ShapeMaker();
+            shapeMaker.drawCircle();
+            shapeMaker.drawRectangle();
+        }
+
+        demo();
+    </script>
+</body>
+
+</html>

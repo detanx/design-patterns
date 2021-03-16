@@ -1,0 +1,64 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: Tang xudong
+ * @Date: 2020-11-18 16:48:22
+ * @LastEditors: Tang xudong
+ * @LastEditTime: 2021-02-27 15:42:08
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工厂模式</title>
+</head>
+
+<body>
+    <script>
+
+        class Teacher {
+            teach() {
+                return 'Teacher';
+            }
+        }
+        // 数学老师
+        class MathTeacher extends Teacher {
+            teach() {
+                return 'Math';
+            }
+        }
+        // 语文老师
+        class ChineseTeacher extends Teacher {
+            teach() {
+                return 'Chinese';
+            }
+        }
+
+        // teacher 工厂
+        class TeacherFactory {
+            getTeacher(shape) {
+                if (shape === 'math') {
+                    return new MathTeacher();
+                }
+                else if (shape === 'chinese') {
+                    return new ChineseTeacher();
+                }
+                return new Teacher();
+            }
+        }
+
+        // 选择老师
+        function factoryDemo() {
+            const teacherFactory = new TeacherFactory();
+            console.log('math', teacherFactory.getTeacher('math').teach());
+            console.log('chinese', teacherFactory.getTeacher('chinese').teach());
+            console.log('empty', teacherFactory.getTeacher('').teach());
+        }
+        factoryDemo();
+
+    </script>
+</body>
+
+</html>

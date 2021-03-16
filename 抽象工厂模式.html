@@ -1,0 +1,121 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: Tang xudong
+ * @Date: 2020-11-18 16:48:22
+ * @LastEditors: Tang xudong
+ * @LastEditTime: 2021-02-27 16:25:42
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抽象工厂模式</title>
+</head>
+
+<body>
+    <script>
+        class Teacher {
+            teach() {
+                return 'Teacher';
+            }
+        }
+        // 数学老师
+        class MathTeacher extends Teacher {
+            teach() {
+                return 'Math';
+            }
+        }
+        // 语文老师
+        class ChineseTeacher extends Teacher {
+            teach() {
+                return 'Chinese';
+            }
+        }
+
+        // 性别
+        class Sex {
+            sex() {
+                return '';
+            }
+        }
+
+        class ManSex extends Sex {
+            sex() {
+                return 'Man';
+            }
+        }
+        class WomanSex extends Sex {
+            sex() {
+                return 'Woman';
+            }
+        }
+
+        // 抽象工厂
+        class AbstractFactory {
+            getTeacher(teacher) {
+                return new Teacher();
+            }
+            getSex(sex) {
+                return new Sex();
+            }
+        }
+
+        // 教师工厂
+        class TeacherFactory extends AbstractFactory {
+            getTeacher(teacher) {
+                if (teacher === 'math') {
+                    return new MathTeacher();
+                }
+                else if (teacher === 'chinese') {
+                    return new ChineseTeacher();
+                }
+                return new Teacher();
+            }
+            getSex(sex) {
+                return new Sex();
+
+            }
+        }
+
+        // 性别工厂
+        class SexFactory extends AbstractFactory {
+            getTeacher(teacher) {
+                return new Teacher();
+            }
+            getSex(sex) {
+                if (sex === 'woman') {
+                    return new WomanSex();
+                }
+                else if (sex === 'man') {
+                    return new ManSex();
+                }
+                return new Sex();
+
+            }
+        }
+        // 工厂创造器/生成器类
+        class FactoryProvider {
+            getFactory(type) {
+                if (type === 'teacher') {
+                    return new TeacherFactory()
+                } else if (type === 'sex') {
+                    return new SexFactory()
+                }
+            }
+        }
+
+        function factoryDemo() {
+            const factoryProvider = new FactoryProvider();
+            console.log('teacher: math ----', factoryProvider.getFactory('teacher').getTeacher('math').teach());
+            console.log('sex: woman ----', factoryProvider.getFactory('sex').getSex('woman').sex());
+
+        }
+        factoryDemo();
+
+    </script>
+</body>
+
+</html>

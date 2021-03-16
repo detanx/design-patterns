@@ -1,0 +1,69 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: Tang xudong
+ * @Date: 2021-03-15 17:53:07
+ * @LastEditors: Tang xudong
+ * @LastEditTime: 2021-03-15 17:53:22
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>桥接模式</title>
+</head>
+
+<body>
+    <script>
+        class DrawAPI {
+            drawCircle(radius, x, y) {
+                console.log('drawCircle');
+            }
+        }
+
+        class RedCircle extends DrawAPI {
+            drawCircle(radius, x, y) {
+                console.log("Drawing Circle[ color: red, radius: " + radius + ", x: " + x + ", " + y + "]");
+            }
+        }
+        class GreenCircle extends DrawAPI {
+            drawCircle(radius, x, y) {
+                console.log("Drawing Circle[ color: green, radius: " + radius + ", x: " + x + ", " + y + "]");
+            }
+        }
+
+        class Shape {
+            constructor(drawApi) {
+                this.drawApi = drawApi;
+            }
+            draw() {
+                console.log('draw shape!');
+            }
+        }
+
+        class Circle extends Shape {
+            constructor(x, y, radius, drawApi) {
+                super(drawApi);
+                this.x = x;
+                this.y = y;
+                this.radius = radius;
+            }
+            draw() {
+                this.drawApi.drawCircle(this.radius, this.x, this.y);
+            }
+        }
+
+        function demo() {
+            const redCircle = new Circle(10, 10, 10, new RedCircle());
+            const greenCircle = new Circle(20, 20, 20, new GreenCircle());
+            redCircle.draw();
+            greenCircle.draw();
+        }
+
+        demo();
+    </script>
+</body>
+
+</html>

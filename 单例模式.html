@@ -1,0 +1,49 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: Tang xudong
+ * @Date: 2020-11-18 16:48:22
+ * @LastEditors: Tang xudong
+ * @LastEditTime: 2021-02-27 16:47:45
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单例模式</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+
+        class Singleton {
+            constructor(name) {
+                this.name = name;
+            }
+
+            getName() {
+                return this.name;
+            }
+
+            // 获取单例的接口
+            static getInstance(name) {
+                // 判断是否存在实例
+                if (Singleton.instance === undefined) {
+                    Singleton.instance = new Singleton(name);
+                }
+                return Singleton.instance;
+            }
+        }
+
+        // test
+        const ins1 = Singleton.getInstance('小小小十七');
+        const ins2 = Singleton.getInstance('17');
+        console.log('ins1 === ins2 ?', ins1 === ins2); // ins1 === ins2 ? true
+        console.log(ins1.name, ins2.getName()); // 小小小十七 小小小十七
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: Tang xudong
+ * @Date: 2021-03-15 18:39:28
+ * @LastEditors: Tang xudong
+ * @LastEditTime: 2021-03-15 19:05:04
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>装饰器模式</title>
+</head>
+
+<body>
+    <script>
+
+        class Shape {
+            draw() {
+                console.log('draw shape.');
+            }
+        }
+        class Circle extends Shape {
+            draw() {
+                console.log('draw circle.');
+            }
+        }
+
+        class Rectangle extends Shape {
+            draw() {
+                console.log('draw rectangle.');
+            }
+        }
+
+        class ShapeDecorator {
+            constructor(shape) {
+                this.shape = shape
+            }
+            draw() {
+                this.shape.draw();
+            }
+        }
+        class RedShapeDecorator extends ShapeDecorator {
+            constructor(shape) {
+                super(shape)
+            }
+            draw() {
+                this.shape.draw();
+                this.setRedColor(this.shape)
+            }
+            setRedColor() {
+                console.log('add red color');
+            }
+        }
+        function demo() {
+            const circle = new Circle();
+            const redCircle = new RedShapeDecorator(new Circle());
+            const redRectangle = new RedShapeDecorator(new Rectangle());
+            circle.draw();
+            console.log('--------red circle--------');
+            redCircle.draw();
+            console.log('--------red rectangle--------');
+            redRectangle.draw();
+        }
+
+        demo();
+    </script>
+</body>
+
+</html>

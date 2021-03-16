@@ -1,0 +1,87 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: Tang xudong
+ * @Date: 2021-03-15 19:33:39
+ * @LastEditors: Tang xudong
+ * @LastEditTime: 2021-03-15 19:33:40
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>享元模式</title>
+</head>
+
+<body>
+    <script>
+
+        class Shape {
+            draw() {
+                console.log('draw shape.');
+            }
+        }
+        class Circle extends Shape {
+            draw() {
+                console.log('draw');
+            }
+        }
+        class ShapeFactory {
+            constructor() {
+                this.circleMap = new Map();
+            }
+
+            getCircle(color) {
+                this.color = color;
+                let circle = this.circleMap.get(color);
+                if (!circle) {
+                    const circle = new Circle(color);
+                    this.circleMap.set(color, circle);
+                    console.log("Creating circle of color : " + color);
+                }
+                return circle;
+            }
+            setX(x) {
+                this.x = x;
+            }
+
+            setY(y) {
+                this.y = y;
+            }
+
+            setRadius(radius) {
+                this.radius = radius;
+            }
+            draw() {
+                console.log("Circle: Draw() [Color : " + this.color + ", x : " + this.x + ", y :" + this.y + ", radius :" + this.radius);
+            }
+
+        }
+        const colors = ["Red", "Green", "Blue", "White", "Black"];
+        function getRandomColor() {
+            return colors[parseInt(Math.random() * colors.length)];
+        }
+        function getRandomX() {
+            return Math.random() * 100;
+        }
+        function getRandomY() {
+            return Math.random() * 100;
+        }
+        function demo() {
+            for (let i = 0; i < 5; ++i) {
+                const circle = new ShapeFactory()
+                circle.getCircle(getRandomColor());
+                circle.setX(getRandomX());
+                circle.setY(getRandomY());
+                circle.setRadius(100);
+                circle.draw();
+            }
+        }
+
+        demo();
+    </script>
+</body>
+
+</html>

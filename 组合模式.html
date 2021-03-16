@@ -1,0 +1,63 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: Tang xudong
+ * @Date: 2021-03-15 18:53:12
+ * @LastEditors: Tang xudong
+ * @LastEditTime: 2021-03-15 18:53:19
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组合模式</title>
+</head>
+
+<body>
+    <script>
+        class Employee {
+            constructor(dept, name, age) {
+                this.dept = dept;
+                this.name = name;
+                this.age = age;
+                this.adptEmployeeList = {};
+            }
+            add(employee) {
+                this.adptEmployeeList[employee.name] = employee;
+            }
+            remove(employee) {
+                delete this.adptEmployeeList[employee.name]
+            }
+
+            getList() {
+                return this.adptEmployeeList
+            }
+            toEmployeeString() {
+                return ("Employee :[ Name : " + this.name + ", dept : " + this.dept + ", age :" + this.age + " ]");
+            }
+        }
+        function demo() {
+            const CEO = new Employee('ceo', '小小小十七', 25);
+            const headerHR = new Employee('HR', '小十七', 20);
+            const headerSales = new Employee('sales', '十七', 31);
+            const hr1 = new Employee('ceo', '七', 20);
+            const hr2 = new Employee('ceo', '五六七', 19);
+            const sales1 = new Employee('ceo', '小十', 28);
+            const sales2 = new Employee('ceo', '小九', 30);
+            CEO.add(headerHR);
+            CEO.add(headerSales);
+            headerHR.add(hr1);
+            headerHR.add(hr2);
+            headerHR.remove(hr1);
+            headerSales.add(sales1);
+            headerSales.add(sales2);
+            console.log('ceo', CEO);
+        }
+
+        demo();
+    </script>
+</body>
+
+</html>

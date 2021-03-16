@@ -1,0 +1,76 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: Tang xudong
+ * @Date: 2020-11-18 16:48:22
+ * @LastEditors: Tang xudong
+ * @LastEditTime: 2021-02-27 16:54:00
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>建造者模式</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        // 工人
+        class Worker {
+            constructor(partName) {
+                console.log('工人：我在建造', partName);
+                this.partName = partName;
+            }
+        }
+
+        // 抽象房屋结构
+        class Part {
+            constructor() {
+                console.log('创建项目');
+            }
+            build(partName) {
+                console.log('开始建造', partName);
+            }
+        }
+
+        class CreatePart extends Part {
+            constructor(partName) {
+                super();
+                this.partName = partName;
+            }
+            build() {
+                super.build(this.partName);
+                this.worker = new Worker(this.partName);
+            }
+
+            getResult() {
+                console.log(this.partName, '建造完成');
+                return this.worker
+            }
+        }
+
+        // 建筑商
+        class Developer {
+            constructor(need) {
+                this.need = need;
+                console.log('我的建造需求', need);
+            }
+            start() {
+                const WorkOver = this.need.map(element => {
+                    console.log(`查看'${element}'图纸`);
+                    const builder = new CreatePart(element);
+                    builder.build();
+                    return builder.getResult();
+                });
+                console.log('所有建造完成', WorkOver);
+            }
+        }
+
+        const develop = new Developer(['客厅', '一室一卫'])
+        develop.start();
+    </script>
+</body>
+
+</html>
