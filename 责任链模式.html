@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>责任链模式</title>
+</head>
+
+<body>
+    <script>
+        const INFO = 1;
+        const DEBUG = 2;
+        const ERROR = 3;
+        class AbstractLogger {
+            constructor() {
+                this.nextLogger = null;
+            }
+
+            setNextLogger(nextLogger) {
+                this.nextLogger = nextLogger;
+            }
+
+            logMessage(level, message) {
+                if (this.level <= level) {
+                    this.write(message);
+                }
+                if (this.nextLogger !== null) {
+                    this.nextLogger.logMessage(level, message);
+                }
+            }
+            write(message) {
+                console.log('message', message);
+            }
+        }
+
+        class ConsoleLogger extends AbstractLogger {
+            constructor(level) {
+                super();
+                this.level = level;
+            }
+            write(message) {
+                console.log("Console Logger: " + message);
+            }
+        }
+        class ErrorLogger extends AbstractLogger {
+            constructor(level) {
+                super();
+                this.level = level;
+            }
+            write(message) {
+                console.log("Error Logger: " + message);
+            }
+        }
+        class FileLogger extends AbstractLogger {
+            constructor(level) {
+                super();
+                this.level = level;
+            }
+            write(message) {
+                console.log("File Logger: " + message);
+            }
+        }
+
+        function getChainOfLoggers() {
+            const errorLogger = new ErrorLogger(ERROR);
+            const fileLogger = new FileLogger(DEBUG);
+            const consoleLogger = new ConsoleLogger(INFO);
+
+            errorLogger.setNextLogger(fileLogger);
+            fileLogger.setNextLogger(consoleLogger);
+
+            return errorLogger;
+        }
+
+        function demo() {
+            const loggerChain = getChainOfLoggers();
+            loggerChain.logMessage(INFO, "This is an information.");
+
+            loggerChain.logMessage(DEBUG,
+                "This is a debug level information.");
+
+            loggerChain.logMessage(ERROR,
+                "This is an error information.");
+        }
+
+        demo()
+
+    </script>
+</body>
+
+</html>
