@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>解释器模式</title>
+</head>
+
+<body>
+    <script>
+        class Expression {
+            interpret(context) { }
+        }
+
+        class TerminalExpression extends Expression {
+            constructor(data) {
+                super();
+                this.data = data;
+            }
+            interpret(context) {
+                if (context.includes(this.data)) {
+                    return true
+                }
+                return false;
+            }
+        }
+        class OrExpression extends Expression {
+            constructor(expr1, expr2) {
+                super();
+                this.expr1 = expr1;
+                this.expr2 = expr2;
+            }
+            interpret(context) {
+                return this.expr1.interpret(context) || this.expr2.interpret(context);
+            }
+        }
+        class AndExpression extends Expression {
+            constructor(expr1, expr2) {
+                super();
+                this.expr1 = expr1;
+                this.expr2 = expr2;
+            }
+            interpret(context) {
+                return this.expr1.interpret(context) && this.expr2.interpret(context);
+            }
+        }
+        function demo() {
+            //规则：Robert 和 John 是男性
+            function getMaleExpression() {
+                const robert = new TerminalExpression("Robert");
+                const john = new TerminalExpression("John");
+                return new OrExpression(robert, john);
+            }
+
+            //规则：Julie 是一个已婚的女性
+            function getMarriedWomanExpression() {
+                const julie = new TerminalExpression("Julie");
+                const married = new TerminalExpression("Married");
+                return new AndExpression(julie, married);
+            }
+
+            const isMale = getMaleExpression();
+            const isMarriedWoman = getMarriedWomanExpression();
+
+            console.log("John is male? " + isMale.interpret("John"));
+            console.log("Julie is a married women? " + isMarriedWoman.interpret("Married Julie"));
+        }
+
+        demo()
+
+    </script>
+</body>
+
+</html>

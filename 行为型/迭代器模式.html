@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>迭代器模式</title>
+</head>
+
+<body>
+    <script>
+        class Iterator {
+            hasNext() { }
+            next() { }
+        }
+
+        class Container {
+            getIterator() { }
+        }
+
+        // 获取姓名
+        class NameRepository extends Container {
+            constructor(names) {
+                super();
+                this.names = names;
+            }
+            getIterator() {
+                return new NameIterator(this.names);
+            }
+        }
+
+        // 姓名迭代器
+        class NameIterator extends Iterator {
+            constructor(names) {
+                super();
+                this.index = 0;
+                this.names = names;
+            }
+            hasNext() {
+                if (this.index < this.names.length) {
+                    return true
+                }
+                return false;
+            }
+            next() {
+                if (this.hasNext()) {
+                    return {
+                        index: this.index,
+                        name: this.names[this.index++]
+                    };
+                }
+                return null
+            }
+        }
+        function demo() {
+            const NAMES = ['detanx', '17', 'xxx17', 'x17'];
+            const nameRepository = new NameRepository(NAMES);
+            for (let item = nameRepository.getIterator(); item.hasNext();) {
+                console.log('name: ', item.next());
+            }
+        }
+
+        demo()
+
+    </script>
+</body>
+
+</html>

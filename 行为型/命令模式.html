@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>命令模式</title>
+</head>
+
+<body>
+    <script>
+        class Order {
+            execute() { }
+        }
+
+        // 商品
+        class Stock {
+            constructor(name, quantity) {
+                this.name = name;
+                this.quantity = quantity;
+            }
+
+            buy() {
+                console.log("Stock [ Name: " + this.name + ", Quantity: " + this.quantity + " ] bought");
+            }
+
+            sell() {
+                console.log("Stock [ Name: " + this.name + ", Quantity: " + this.quantity + " ] sold");
+            }
+        }
+
+        // 购买商品订单
+        class BuyStock extends Order {
+            constructor(abcStock) {
+                super();
+                this.abcStock = abcStock;
+            }
+            execute() {
+                this.abcStock.buy();
+            }
+        }
+
+        // 出售商品订单
+        class SellStock extends Order {
+            constructor(abcStock) {
+                super();
+                this.abcStock = abcStock;
+            }
+            execute() {
+                this.abcStock.sell();
+            }
+        }
+
+        // 开票
+        class Broker {
+            constructor() {
+                this.orderList = [];
+            }
+            takeOrder(order) {
+                this.orderList.unshift(order);
+            }
+            placeOrders() {
+                for (let order of this.orderList) {
+                    order.execute();
+                }
+                this.orderList = [];
+            }
+        }
+
+        function demo() {
+            const _17Stock = new Stock('xxx17', 17);
+            const _7Stock = new Stock('x7', 7);
+            const broker = new Broker();
+            const sell17Stock = new SellStock(_17Stock);
+            const sell7Stock = new SellStock(_7Stock);
+            const buy7Stock = new BuyStock(_7Stock);
+            const buy17Stock = new BuyStock(_17Stock);
+            broker.takeOrder(sell17Stock);
+            broker.takeOrder(sell7Stock);
+            broker.takeOrder(buy17Stock);
+            broker.takeOrder(buy7Stock);
+
+            broker.placeOrders();
+
+        }
+
+        demo()
+
+    </script>
+</body>
+
+</html>
