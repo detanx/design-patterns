@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中介者模式</title>
+</head>
+
+<body>
+    <script>
+        class ChatRoom {
+            showMessage(user, message) {
+                console.log(new Date().toString() + " [" + user.getName() + "] : " + message);
+            }
+        }
+
+        class User {
+            constructor(name) {
+                this.name = name;
+            }
+            setName(name) {
+                this.name = name;
+            }
+            getName(name) {
+                return this.name;
+            }
+            sendMessage(message) {
+                new ChatRoom().showMessage(this, message);
+            }
+        }
+
+        function demo() {
+            const robert = new User("Robert");
+            const john = new User("John");
+
+            robert.sendMessage("Hi! John!");
+            setTimeout(() => {
+                john.sendMessage("Hello! Robert!");
+            }, 2000)
+        }
+
+        demo()
+
+    </script>
+</body>
+
+</html>

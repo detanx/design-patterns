@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>备忘录模式</title>
+</head>
+
+<body>
+    <script>
+        class Memento {
+            constructor(state) {
+                this.state = state;
+            }
+            getState() {
+                return this.state;
+            }
+        }
+
+        class Originator {
+            constructor(state) {
+                this.state = state;
+            }
+            getState() {
+                return this.state;
+            }
+            setState(state) {
+                this.state = state;
+            }
+            // 存入备忘录
+            saveStateToMemento() {
+                return new Memento(this.state);
+            }
+            // 取出
+            getStateFromMemento(Memento) {
+                if (!Memento) {
+                    this.state = null;
+                } else {
+                    this.state = Memento.getState();
+                }
+            }
+        }
+        class CareTaker {
+            constructor() {
+                this.mementoList = [];
+            }
+            add(state) {
+                this.mementoList.push(state);
+            }
+
+            get(index) {
+                return this.mementoList[index];
+            }
+        }
+
+        function demo() {
+
+            const originator = new Originator();
+            const careTaker = new CareTaker();
+            originator.setState("State #1");
+            originator.setState("State #2");
+            careTaker.add(originator.saveStateToMemento());
+            originator.setState("State #3");
+            careTaker.add(originator.saveStateToMemento());
+            originator.setState("State #4");
+
+            console.log("Current State: " + originator.getState());
+            originator.getStateFromMemento(careTaker.get(0));
+            console.log("First saved State: " + originator.getState());
+            originator.getStateFromMemento(careTaker.get(2));
+            console.log("Third saved State: " + originator.getState());
+        }
+
+        demo()
+
+    </script>
+</body>
+
+</html>
