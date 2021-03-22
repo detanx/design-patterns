@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模板模式</title>
+</head>
+
+<body>
+    <script>
+        class Game {
+            initialize() { };
+            startPlay() { };
+            endPlay() { };
+
+            //模板
+            play() {
+
+                //初始化游戏
+                this.initialize();
+
+                //开始游戏
+                this.startPlay();
+
+                //结束游戏
+                this.endPlay();
+            }
+        }
+
+        class Cricket extends Game {
+            constructor() {
+                super();
+            }
+            endPlay() {
+                console.log("Cricket Game Finished!");
+            }
+
+            initialize() {
+                console.log("Cricket Game Initialized! Start playing.");
+            }
+            startPlay() {
+                console.log("Cricket Game Started. Enjoy the game!");
+            }
+        }
+
+        class Football extends Game {
+            constructor() {
+                super();
+            }
+            endPlay() {
+                console.log("Football Game Finished!");
+            }
+
+            initialize() {
+                console.log("Football Game Initialized! Start playing.");
+            }
+            startPlay() {
+                console.log("Football Game Started. Enjoy the game!");
+            }
+        }
+
+        function demo() {
+            const cricket = new Cricket();
+            cricket.play();
+            const football = new Football();
+            football.play();
+        }
+
+        demo()
+
+    </script>
+</body>
+
+</html>

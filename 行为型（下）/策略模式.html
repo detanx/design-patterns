@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>策略模式</title>
+</head>
+
+<body>
+    <script>
+        class Strategy {
+            doOperation(num1, num2) { }
+        }
+
+        class OperationAdd extends Strategy {
+            constructor() {
+                super();
+            }
+            doOperation(num1, num2) {
+                return num1 + num2;
+            }
+        }
+        class OperationSubtract extends Strategy {
+            constructor() {
+                super();
+            }
+            doOperation(num1, num2) {
+                return num1 - num2;
+            }
+        }
+
+        class Context {
+            constructor(strategy) {
+                this.strategy = strategy;
+            }
+            execStrategy(num1, num2) {
+                return this.strategy.doOperation(num1, num2)
+            }
+        }
+
+        function demo() {
+            let context = new Context(new OperationAdd());
+            console.log('10 + 7 = ', context.execStrategy(10, 7));
+            context = new Context(new OperationSubtract());
+            console.log('10 - 7 = ', context.execStrategy(10, 7));
+        }
+
+        demo()
+
+    </script>
+</body>
+
+</html>

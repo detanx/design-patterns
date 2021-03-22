@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>状态模式</title>
+</head>
+
+<body>
+    <script>
+        class State {
+            doAction(context) { }
+        }
+
+        class StartState extends State {
+            doAction(context) {
+                console.log('Player is in start state.');
+                context.setState(this);
+            }
+            toString() {
+                return "Start State";
+            }
+        }
+
+        class StopState extends State {
+            doAction(context) {
+                console.log('Player is in stop state.');
+                context.setState(this);
+            }
+            toString() {
+                return "Stop State";
+            }
+        }
+        class Context {
+            constructor() {
+                this.state = null;
+            }
+            getState() {
+                return this.state;
+            }
+            setState(state) {
+                this.state = state;
+            }
+        }
+
+        function demo() {
+            const context = new Context();
+
+            console.log('context state:', context.getState());
+            const startState = new StartState();
+            startState.doAction(context);
+            console.log('context state:', context.getState().toString());
+            const stopState = new StopState(context);
+            stopState.doAction(context);
+            console.log('context state:', context.getState().toString());
+        }
+
+        demo()
+
+    </script>
+</body>
+
+</html>

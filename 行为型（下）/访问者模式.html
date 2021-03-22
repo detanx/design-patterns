@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>访问者模式</title>
+</head>
+
+<body>
+    <script>
+        class computerPart {
+            accept(computerPartVisitor) { }
+        }
+        class KeyBoard extends computerPart {
+            accept(computerPartVisitor) {
+                computerPartVisitor.visitKeyBoard(this);
+            }
+        }
+        class Mouse extends computerPart {
+            accept(computerPartVisitor) {
+                computerPartVisitor.visitMouse(this);
+            }
+        }
+
+        class Computer extends computerPart {
+            constructor() {
+                super();
+                this.parts = [new KeyBoard(), new Mouse()];
+            }
+
+            accept(computerPartVisitor) {
+                for (let item of this.parts) {
+                    item.accept(computerPartVisitor);
+                }
+                computerPartVisitor.visitComputer(this);
+            }
+        }
+
+        class ComputerPartVisitor {
+
+            visitComputer(computer) { };
+            visitMouse(mouse) { };
+            visitKeyBoard(keyboard) { };
+        }
+
+        class ComputerPartDisplayVisitor extends ComputerPartVisitor {
+            visitComputer(computer) {
+                console.log("Displaying Computer.");
+            }
+            visitMouse(mouse) {
+                console.log("Displaying Mouse.");
+            }
+            visitKeyBoard(keyboard) {
+                console.log("Displaying Keyboard.");
+            }
+        }
+
+        function demo() {
+            const computer = new Computer();
+            computer.accept(new ComputerPartDisplayVisitor());
+        }
+
+        demo()
+
+    </script>
+</body>
+
+</html>
